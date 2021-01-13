@@ -2,6 +2,26 @@
 
 const db = require('../server/db')
 const {User} = require('../server/db/models')
+const Candy = require('../server/db/models/candy')
+
+const candies = [
+  {
+    name: 'Twix',
+    price: 1,
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Twix-Wrapper-Small.jpg/240px-Twix-Wrapper-Small.jpg',
+    description: 'Twix Creamy Peanuty Buttery',
+    quantity: 4
+  },
+  {
+    name: 'KitKat',
+    price: 2,
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/KitKat_logo.svg/1200px-KitKat_logo.svg.png',
+    description: 'Kitkat Crispy Crunsh',
+    quantity: 4
+  }
+]
 
 async function seed() {
   await db.sync({force: true})
@@ -12,6 +32,13 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
+  const dummyCandies = await Promise.all(
+    candies.map(candy => {
+      return Candy.create(candy)
+    })
+  )
+
+  console.log(`seeded ${dummyCandies.length} candies`)
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
