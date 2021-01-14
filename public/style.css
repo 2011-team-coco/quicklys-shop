@@ -19,3 +19,10 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.flex {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 0 15px;
+}
