@@ -38,7 +38,7 @@ async function seed() {
   )
 
   const dummyOrder = await Order.create({
-    isCart: false
+    isCart: true
   })
   await users[0].addOrder(dummyOrder)
   const orderCandy = await OrderCandy.create({
