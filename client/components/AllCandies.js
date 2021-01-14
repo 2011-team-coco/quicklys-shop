@@ -29,19 +29,20 @@ export class AllCandies extends React.Component {
     return (
       <div>
         <div>
-          <h1>ok</h1>
+          <h1>All Candies View</h1>
         </div>
         {isThereCandies && (
           <div className="flex">
             {this.props.candies.map(candy => (
               <ul key={candy.id}>
-                <li>Candies Name & Quatity</li>
-                <Link to={`/candies/${candy.id}`}>
-                  <h4>{candy.name}</h4>
-                  <img src={candy.imageUrl} />
-                </Link>
-
-                <h4>{candy.quantity}</h4>
+                <main>
+                  <h4>Candies Name & Quatity</h4>
+                  <Link to={`/candies/${candy.id}`}>
+                    <h4>{candy.name}</h4>
+                    <h4>{candy.quantity}</h4>
+                  </Link>
+                  <img className="image" src={candy.imageUrl} />
+                </main>
               </ul>
             ))}
           </div>
