@@ -1,17 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleCandy} from '../store/singleCandy'
+import {fetchSingleCandy} from '../redux/singleCandy'
 
 export class SingleCandy extends React.Component {
   async componentDidMount() {
+    console.log('props in componentDidMount', this.props)
     await this.props.loadSingleCandy(this.props.match.params.id)
   }
   render() {
     const singleCandy = this.props.singleCandy
-    console.log(singleCandy)
     return (
       <div>
-        <h1>The name is {singleCandy.name}, plesed to meet you!</h1>
+        <h1>{singleCandy.name}!</h1>
         <img src={singleCandy.imageUrl} width="250" />
         <div>Price: {singleCandy.price}</div>
       </div>
