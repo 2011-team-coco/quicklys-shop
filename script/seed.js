@@ -1,8 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
-const Candy = require('../server/db/models/candy')
+const {User, Candy, Order, OrderCandy} = require('../server/db/models')
 
 const candies = [
   {
@@ -36,6 +35,33 @@ async function seed() {
     candies.map(candy => {
       return Candy.create(candy)
     })
+  )
+
+  const dummyOrder = await Order.create({
+    isCart: false
+  })
+  await users[0].addOrder(dummyOrder)
+  const orderCandy = await OrderCandy.create({
+    quantity: 2,
+    candyId: dummyCandies[0].id,
+    orderId: dummyOrder.id
+  })
+
+  const checkEagerLoading = await Order.findByPk(dummyOrder.id, {
+    include: [
+      {
+        model: OrderCandy,
+        include: [Candy]
+      },
+      {
+        model: User
+      }
+    ]
+  })
+
+  console.log(
+    'CHECK EAGER LOADING',
+    JSON.stringify(checkEagerLoading.dataValues)
   )
 
   console.log(`seeded ${dummyCandies.length} candies`)
