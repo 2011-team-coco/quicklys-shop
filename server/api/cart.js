@@ -82,6 +82,40 @@ router.put('/candy/:candyId', async (req, res, next) => {
   }
 })
 
+router.delete('/candy/:candyId', async (req, res, next) => {
+  try {
+    // get active cart
+    const cart = await Order.findOne({
+      where: {
+        isCart: true,
+        userId: req.params.userId,
+      },
+    })
+    if (!cart) throw new Error('Validation error')
+
+    // look up order_candy in order to update quantity
+    const orderCandyToDelete = await OrderCandy.findOne({
+      where: {
+        orderId: cart.id,
+        candyId: req.params.candyId,
+      },
+    })
+    if (!orderCandyToDelete) {
+      throw new Error('Validation error')
+    }
+
+    //update quantity
+    await orderCandyToDelete.destroy()
+
+    // get updated cart to return to client
+    const updatedCart = await getOrCreateCart(req.params.userId)
+
+    res.json(updatedCart)
+  } catch (err) {
+    next(err)
+  }
+})
+
 const getOrCreateCart = async (userId) => {
   const includeQuery = [
     {
