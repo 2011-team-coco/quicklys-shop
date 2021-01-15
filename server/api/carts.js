@@ -5,6 +5,7 @@ module.exports = router
 // /users/:userId/cart/
 router.get('/', async (req, res, next) => {
   try {
+    // TODO: validate that req.params.userId matches session's userId OR user is admin
     const cart = await getOrCreateCart(req.params.userId)
     res.json(cart)
   } catch (err) {
@@ -15,6 +16,8 @@ router.get('/', async (req, res, next) => {
 // /users/:userId/cart/candy/:candyId
 router.post('/candy/:candyId', async (req, res, next) => {
   try {
+    // TODO: validate that req.params.userId matches session's userId OR user is admin
+
     // get current cart for orderId
     let cart = await Order.findOne({
       where: {
@@ -48,6 +51,8 @@ router.post('/candy/:candyId', async (req, res, next) => {
 // /users/:userId/cart/candy/:candyId
 router.put('/candy/:candyId', async (req, res, next) => {
   try {
+    // TODO: validate that req.params.userId matches session's userId OR user is admin
+
     // get active cart
     const cart = await Order.findOne({
       where: {
@@ -84,6 +89,8 @@ router.put('/candy/:candyId', async (req, res, next) => {
 
 router.delete('/candy/:candyId', async (req, res, next) => {
   try {
+    // TODO: validate that req.params.userId matches session's userId OR user is admin
+
     // get active cart
     const cart = await Order.findOne({
       where: {
