@@ -57,7 +57,7 @@ const createApp = () => {
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
-      saveUninitialized: false
+      saveUninitialized: false,
     })
   )
   app.use(passport.initialize())
@@ -90,6 +90,13 @@ const createApp = () => {
   app.use((err, req, res, next) => {
     console.error(err)
     console.error(err.stack)
+    console.log('Error message is ', err.message)
+    if (
+      err.message === 'Validation error' ||
+      err.message.includes('violates foreign key constraint')
+    ) {
+      res.status(400).send('Request is invalid or malformed')
+    }
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })
 }

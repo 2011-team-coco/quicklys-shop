@@ -7,7 +7,14 @@ const {Candy} = require('../db/models')
 router.get('/', async (req, res, next) => {
   try {
     const candies = await Candy.findAll({
-      attributes: ['id', 'name', 'price', 'imageUrl', 'description', 'quantity']
+      attributes: [
+        'id',
+        'name',
+        'price',
+        'imageUrl',
+        'description',
+        'quantity',
+      ],
     })
 
     res.json(candies)

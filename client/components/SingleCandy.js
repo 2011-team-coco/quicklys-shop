@@ -19,12 +19,12 @@ export class SingleCandy extends React.Component {
   }
 }
 
-const mapState = state => ({
-  singleCandy: state.singleCandy
+const mapState = (state) => ({
+  singleCandy: state.singleCandy,
 })
 
-const mapDispatch = dispatch => ({
-  loadSingleCandy: id => dispatch(fetchSingleCandy(id))
+const mapDispatch = (dispatch) => ({
+  loadSingleCandy: (id) => dispatch(fetchSingleCandy(id)),
 })
 
 export default connect(mapState, mapDispatch)(SingleCandy)

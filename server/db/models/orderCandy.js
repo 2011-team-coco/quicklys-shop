@@ -5,15 +5,16 @@ const OrderCandy = db.define('order_candy', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
-  }
+      notEmpty: true,
+    },
+  },
+  // include historical price
 })
 
 module.exports = OrderCandy

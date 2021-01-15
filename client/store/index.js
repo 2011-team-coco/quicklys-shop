@@ -9,7 +9,7 @@ import singleCandyReducer from '../redux/singleCandy'
 const reducer = combineReducers({
   user,
   candies: candiesReducer,
-  singleCandy: singleCandyReducer
+  singleCandy: singleCandyReducer,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

@@ -2,15 +2,15 @@ import axios from 'axios'
 
 const SET_SINGLE_CANDY = 'SET_SINGLE_CANDY'
 
-const setSingleCandy = (candy) => {
+const setSingleCandy = candy => {
   return {
     type: SET_SINGLE_CANDY,
-    candy,
+    candy
   }
 }
 
-export const fetchSingleCandy = (id) => {
-  return async (dispatch) => {
+export const fetchSingleCandy = id => {
+  return async dispatch => {
     try {
       const {data} = await axios.get(`/api/candies/${id}`)
       dispatch(setSingleCandy(data))
