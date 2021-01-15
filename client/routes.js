@@ -4,6 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
+import AllCandies from './components/AllCandies'
 import SingleCandy from './components/SingleCandy'
 
 /**
@@ -22,7 +23,8 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/candies/:id" component={SingleCandy} />
+        <Route exact path="/candies" component={AllCandies} />
+        <Route exact path="/candies/:id" component={SingleCandy} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
