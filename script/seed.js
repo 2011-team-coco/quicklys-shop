@@ -2,6 +2,7 @@
 
 const db = require('../server/db')
 const {User, Candy, Order, OrderCandy} = require('../server/db/models')
+const candyList = require('./candyList')
 
 const candies = [
   {
@@ -33,6 +34,19 @@ async function seed() {
 
   const dummyCandies = await Promise.all(
     candies.map((candy) => {
+      return Candy.create(candy)
+    })
+  )
+
+  const candySeed = await Promise.all(
+    candyList.map((candyName) => {
+      let candy = {
+        name: candyName,
+        price: (Math.random() * (5 - 0.25) + 0.25).toFixed(2),
+        quantity: Math.floor(Math.random() * (1000 - 1) + 1),
+        description: 'A tasty treat',
+        imageUrl: '/candyDefault.jpg',
+      }
       return Candy.create(candy)
     })
   )
