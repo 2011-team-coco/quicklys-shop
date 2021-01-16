@@ -2,6 +2,7 @@
 
 const db = require('../server/db')
 const {User, Candy, Order, OrderCandy} = require('../server/db/models')
+const candyList = require('./candyList')
 
 const candies = [
   {
@@ -10,7 +11,7 @@ const candies = [
     imageUrl:
       'https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Twix-Wrapper-Small.jpg/240px-Twix-Wrapper-Small.jpg',
     description: 'Twix Creamy Peanuty Buttery',
-    quantity: 4
+    quantity: 4,
   },
   {
     name: 'KitKat',
@@ -18,8 +19,8 @@ const candies = [
     imageUrl:
       'https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/KitKat_logo.svg/1200px-KitKat_logo.svg.png',
     description: 'Kitkat Crispy Crunsh',
-    quantity: 4
-  }
+    quantity: 4,
+  },
 ]
 
 async function seed() {
@@ -28,35 +29,48 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: 'murphy@email.com', password: '123'}),
   ])
 
   const dummyCandies = await Promise.all(
-    candies.map(candy => {
+    candies.map((candy) => {
+      return Candy.create(candy)
+    })
+  )
+
+  const candySeed = await Promise.all(
+    candyList.map((candyName) => {
+      let candy = {
+        name: candyName,
+        price: (Math.random() * (5 - 0.25) + 0.25).toFixed(2),
+        quantity: Math.floor(Math.random() * (1000 - 1) + 1),
+        description: 'A tasty treat',
+        imageUrl: '/candyDefault.jpg',
+      }
       return Candy.create(candy)
     })
   )
 
   const dummyOrder = await Order.create({
-    isCart: true
+    isCart: true,
   })
   await users[0].addOrder(dummyOrder)
   const orderCandy = await OrderCandy.create({
     quantity: 2,
     candyId: dummyCandies[0].id,
-    orderId: dummyOrder.id
+    orderId: dummyOrder.id,
   })
 
   const checkEagerLoading = await Order.findByPk(dummyOrder.id, {
     include: [
       {
         model: OrderCandy,
-        include: [Candy]
+        include: [Candy],
       },
       {
-        model: User
-      }
-    ]
+        model: User,
+      },
+    ],
   })
 
   console.log(
