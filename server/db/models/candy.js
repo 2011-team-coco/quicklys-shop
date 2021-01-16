@@ -6,30 +6,30 @@ const Candy = db.define('candy', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
+      notEmpty: true,
+    },
   },
 
   price: {
     type: Sequelize.FLOAT,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
+      notEmpty: true,
+    },
   },
   imageUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
   },
   description: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
   },
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
-  }
+      notEmpty: true,
+    },
+  },
 })
 
 module.exports = Candy
