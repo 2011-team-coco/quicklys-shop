@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddCandyForm = props => {
+const AddCandyForm = (props) => {
   return (
     <form onSubmit={props.submitHandler}>
       <h3>{props.formTitle}</h3>
@@ -31,6 +31,14 @@ const AddCandyForm = props => {
         type="text"
         name="description"
         value={props.candyValues.description}
+        onChange={props.changeHandler}
+      />
+      <br />
+      <label>Quantity:</label>
+      <input
+        type="number"
+        name="quantity"
+        value={props.candyValues.quantity}
         onChange={props.changeHandler}
       />
 
