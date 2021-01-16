@@ -85,6 +85,7 @@ const mapState = (state) => {
   return {
     cart: state.cart,
     userId: state.user.id,
+    //fetches cart belonging to userId
     isLoggedIn: !!state.user.id,
   }
 }
