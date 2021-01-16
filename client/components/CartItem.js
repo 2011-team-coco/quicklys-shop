@@ -44,18 +44,24 @@ const CartItem = (props) => {
     },
     image: {
       width: '100%',
+      maxWidth: '200px',
     },
   }
   return (
     <Grid container style={classes.innerGrid} spacing={2}>
       <Grid item xs={6}>
         <Button value={orderCandy.candy.candyId} onClick={onItemClick}>
-          <Grid style={classes.details} container spacing={2}>
+          <Grid direction="row" style={classes.details} container spacing={2}>
             <Grid item xs={4}>
-              <img style={classes.image} src={orderCandy.candy.imageUrl}></img>
+              <div>
+                <img
+                  style={classes.image}
+                  src={orderCandy.candy.imageUrl}
+                ></img>
+              </div>
             </Grid>
             <Grid item xs={8}>
-              <Typography>{orderCandy.candy.name}</Typography>
+              <Typography align="left">{orderCandy.candy.name}</Typography>
             </Grid>
           </Grid>
         </Button>
