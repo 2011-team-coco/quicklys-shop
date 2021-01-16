@@ -1,10 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleCandy} from '../redux/singleCandy'
+import {modifyCandy, fetchSingleCandy} from '../redux/singleCandy'
+import EditCandy from './EditCandy'
 
 export class SingleCandy extends React.Component {
   async componentDidMount() {
-    console.log('props in componentDidMount', this.props)
     await this.props.loadSingleCandy(this.props.match.params.id)
   }
   render() {
@@ -14,17 +14,22 @@ export class SingleCandy extends React.Component {
         <h1>{singleCandy.name}!</h1>
         <img src={singleCandy.imageUrl} width="250" />
         <div>Price: {singleCandy.price}</div>
+        <div>
+          <EditCandy {...this.props} />
+        </div>
       </div>
     )
   }
 }
 
-const mapState = (state) => ({
-  singleCandy: state.singleCandy,
+const mapState = state => ({
+  singleCandy: state.singleCandy
 })
 
-const mapDispatch = (dispatch) => ({
-  loadSingleCandy: (id) => dispatch(fetchSingleCandy(id)),
+const mapDispatch = dispatch => ({
+  loadSingleCandy: id => dispatch(fetchSingleCandy(id)),
+  updateCandy: (previousCandyId, modifiedCandy) =>
+    dispatch(modifyCandy(previousCandyId, modifiedCandy))
 })
 
 export default connect(mapState, mapDispatch)(SingleCandy)
