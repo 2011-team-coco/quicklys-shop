@@ -1,8 +1,29 @@
 import axios from 'axios'
 
+//all
+const CLEAR_CART = `CLEAR_CART`
+
+//for guest
+const GUEST_ADD_CART_CANDY = `GUEST_ADD_CART_CANDY`
+
+//for user
 const GET_CART = 'GET_CART'
 const USER_UPDATE_CART_CANDY_QTY = 'USER_UPDATE_CART_CANDY_QTY'
 const USER_DELETE_CART_CANDY = 'USER_DELETE_CART_CANDY'
+
+//no thunk, so we need to export it
+export const clearCart = () => {
+  return {
+    type: CLEAR_CART,
+  }
+}
+
+const guestAddCartCandy = (orderCandy) => {
+  return {
+    type: GUEST_ADD_CART_CANDY,
+    orderCandy,
+  }
+}
 
 const getCart = (cart) => {
   return {
@@ -22,6 +43,27 @@ const userDeleteCartCandy = (cart) => {
   return {
     type: USER_DELETE_CART_CANDY,
     cart,
+  }
+}
+
+export const guestAddCartCandyThunk = (
+  quantity,
+  candyId,
+  candyName,
+  candyPrice,
+  imageUrl
+) => {
+  return async (dispatch) => {
+    const orderCandy = {
+      quantity,
+      candy: {
+        candyId,
+        name: candyName,
+        price: candyPrice,
+        imageUrl,
+      },
+    }
+    dispatch(guestAddCartCandy(orderCandy))
   }
 }
 
@@ -74,12 +116,19 @@ const initialState = {
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
+    case CLEAR_CART:
+      return initialState
     case GET_CART:
       return action.cart
     case USER_UPDATE_CART_CANDY_QTY:
       return action.cart
     case USER_DELETE_CART_CANDY:
       return action.cart
+    case GUEST_ADD_CART_CANDY:
+      return {
+        ...state,
+        order_candies: [...state.order_candies, action.orderCandy],
+      }
     default:
       return state
   }
