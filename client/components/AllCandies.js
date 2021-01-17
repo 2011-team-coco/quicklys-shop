@@ -1,24 +1,45 @@
-// import React from 'react'
-
-// const AllCandies = () => {
-//   return (
-//     <div>
-//       <h1>Hello Candies</h1>
-//     </div>
-//   )
-// }
-
-// export default AllCandies
-/* eslint-disable*/
-
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchCandies} from '../redux/candies'
+import {fetchCandies, createCandy, destroyCandy} from '../redux/candies'
 import {Link} from 'react-router-dom'
+import AddCandyForm from './AddCandyForm'
+
+const defaultState = {
+  name: '',
+  price: 0,
+  imageUrl: '',
+  quantity: 1,
+}
 
 export class AllCandies extends React.Component {
+  constructor() {
+    super()
+    this.state = defaultState
+    this.changeHandler = this.changeHandler.bind(this)
+    this.submitHandler = this.submitHandler.bind(this)
+    this.deleteHandler = this.deleteHandler.bind(this)
+  }
+
   componentDidMount() {
     this.props.loadCandies()
+  }
+
+  changeHandler(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    })
+  }
+
+  submitHandler(event) {
+    event.preventDefault()
+    this.props.addCandy(this.state)
+    this.setState(defaultState)
+  }
+
+  deleteHandler(event) {
+    event.preventDefault()
+    const candyId = Number(event.target.getAttribute('candyid'))
+    this.props.deleteCandy(candyId)
   }
 
   render() {
@@ -28,9 +49,15 @@ export class AllCandies extends React.Component {
         <div>
           <h1>All Candies View</h1>
         </div>
+        <AddCandyForm
+          formTitle="Create Candy"
+          submitHandler={this.submitHandler}
+          changeHandler={this.changeHandler}
+          candyValues={this.state}
+        />
         {isThereCandies && (
           <div className="flex">
-            {this.props.candies.map(candy => (
+            {this.props.candies.map((candy) => (
               <ul key={candy.id}>
                 <main>
                   <h4>Candies Name & Quatity</h4>
@@ -39,6 +66,9 @@ export class AllCandies extends React.Component {
                     <h4>{candy.quantity}</h4>
                   </Link>
                   <img className="image" src={candy.imageUrl} />
+                  <button candyid={candy.id} onClick={this.deleteHandler}>
+                    Delete
+                  </button>
                 </main>
               </ul>
             ))}
@@ -55,13 +85,15 @@ export class AllCandies extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {candies: state.candies}
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    loadCandies: () => dispatch(fetchCandies())
+    loadCandies: () => dispatch(fetchCandies()),
+    addCandy: (candy) => dispatch(createCandy(candy)),
+    deleteCandy: (candyId) => dispatch(destroyCandy(candyId)),
   }
 }
 
