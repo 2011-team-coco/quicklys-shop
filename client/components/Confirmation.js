@@ -53,7 +53,7 @@ const Confirmation = (props) => {
           {cart.order_candies.map((orderCandy) => {
             return (
               <OrderItem
-                key={orderCandy.orderCandyId}
+                key={orderCandy.candy.candyId}
                 orderCandy={orderCandy}
                 userId={null}
               ></OrderItem>

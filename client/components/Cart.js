@@ -64,9 +64,10 @@ export class Cart extends React.Component {
               {this.props.cart.order_candies.map((orderCandy) => {
                 return (
                   <CartItem
-                    key={orderCandy.orderCandyId}
+                    key={orderCandy.candy.candyId}
                     orderCandy={orderCandy}
                     userId={this.props.userId}
+                    isLoggedIn={this.props.isLoggedIn}
                   ></CartItem>
                 )
               })}
