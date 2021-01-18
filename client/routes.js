@@ -7,6 +7,8 @@ import {me} from './store'
 import {getCartThunk} from './store/cart'
 import AllCandies from './components/AllCandies'
 import SingleCandy from './components/SingleCandy'
+import AllUsers from './components/AllUsers'
+import SingleUser from './components/SingleUser'
 
 /**
  * COMPONENT
@@ -31,6 +33,9 @@ class Routes extends Component {
         <Route exact path="/candies/:id" component={SingleCandy} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/confirmation" component={Confirmation} />
+        <Route exact path="/users" component={AllUsers} />
+        <Route exact path="/users/:id" component={SingleUser} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
