@@ -1,4 +1,7 @@
 import React from 'react'
+import axios from 'axios'
+import {connect} from 'react-redux'
+
 import {
   Card,
   CardHeader,
@@ -8,6 +11,9 @@ import {
   CardActions,
   Button,
 } from '@material-ui/core'
+
+import {clearCart} from '../store/cart'
+import history from '../history'
 
 const getTotalItems = (orderCandies) => {
   return orderCandies.reduce((sum, candyOrder) => {
@@ -22,6 +28,28 @@ const getTotalPrice = (orderCandies) => {
 }
 
 const CartOrder = (props) => {
+  const onCheckoutClickHandler = async (e) => {
+    e.preventDefault()
+    console.log('Checkout Triggered')
+    console.log('cart props ', props)
+    //call order api
+    let order
+    if (props.isLoggedIn) {
+      const {data} = await axios.post(`/api/orders/${props.cart.cartId}`)
+      order = data
+    } else {
+      //if guest,
+      //before clearing cart, save everything in cart as "order"
+      order = {
+        ...props.cart,
+        order_candies: [...props.cart.order_candies],
+      }
+    }
+    //dispatch clearCart
+    props.clearCart()
+    //redirect to confirmation page, make order info available on props.location.state.order
+    history.push('/confirmation', order)
+  }
   const styles = {
     right: {
       textAlign: 'right',
@@ -64,7 +92,13 @@ const CartOrder = (props) => {
         </Grid>
       </CardContent>
       <CardActions>
-        <Button color="primary" variant="contained" fullWidth>
+        <Button
+          disabled={!props.cart.order_candies.length}
+          color="primary"
+          variant="contained"
+          fullWidth
+          onClick={onCheckoutClickHandler}
+        >
           Checkout
         </Button>
       </CardActions>
@@ -72,4 +106,9 @@ const CartOrder = (props) => {
   )
 }
 
-export default CartOrder
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearCart: () => dispatch(clearCart()),
+  }
+}
+export default connect(null, mapDispatchToProps)(CartOrder)

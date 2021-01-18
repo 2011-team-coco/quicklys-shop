@@ -21,6 +21,7 @@ const onItemClick = (e) => {
 
 const CartItem = (props) => {
   const onQuantityChange = (e) => {
+    //if user is logged in
     if (e.target.value === 'Remove') {
       // DELETE
       props.userDeleteCartCandy(props.userId, props.orderCandy.candy.candyId)
@@ -31,6 +32,7 @@ const CartItem = (props) => {
         e.target.value
       )
     }
+    //ToDo - update and delete actions for guest user
   }
   console.log('HERE IS THE ORDER CANDY ', props.orderCandy)
   const {orderCandy} = props

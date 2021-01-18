@@ -73,7 +73,10 @@ export class Cart extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <CartOrder cart={this.props.cart}></CartOrder>
+            <CartOrder
+              cart={this.props.cart}
+              isLoggedIn={this.props.isLoggedIn}
+            ></CartOrder>
           </Grid>
         </Grid>
       </div>
@@ -85,7 +88,7 @@ const mapState = (state) => {
   return {
     cart: state.cart,
     userId: state.user.id,
-    //fetches cart belonging to userId
+    //coercing into boolean to see if user is logged in
     isLoggedIn: !!state.user.id,
   }
 }
