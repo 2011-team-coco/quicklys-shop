@@ -5,6 +5,8 @@ import history from '../history'
 import {
   userUpdateCartCandyQtyThunk,
   userDeleteCartCandyThunk,
+  guestDeleteCartCandy,
+  guestUpdateCartCandyQty,
 } from '../store/cart'
 
 const quantityOptions = () => {
@@ -21,18 +23,25 @@ const onItemClick = (e) => {
 
 const CartItem = (props) => {
   const onQuantityChange = (e) => {
+    const candyId = props.orderCandy.candy.candyId
     //if user is logged in
-    if (e.target.value === 'Remove') {
-      // DELETE
-      props.userDeleteCartCandy(props.userId, props.orderCandy.candy.candyId)
+    if (props.isLoggedIn) {
+      if (e.target.value === 'Remove') {
+        // DELETE
+        props.userDeleteCartCandy(props.userId, candyId)
+      } else {
+        props.userUpdateCartCandyQty(props.userId, candyId, e.target.value)
+      }
     } else {
-      props.userUpdateCartCandyQty(
-        props.userId,
-        props.orderCandy.candy.candyId,
-        e.target.value
-      )
+      // guest user
+      if (e.target.value === 'Remove') {
+        // DELETE
+        props.guestDeleteCartCandy(candyId)
+      } else {
+        // update
+        props.guestUpdateCartCandyQty(candyId, e.target.value)
+      }
     }
-    //ToDo - update and delete actions for guest user
   }
   console.log('HERE IS THE ORDER CANDY ', props.orderCandy)
   const {orderCandy} = props
@@ -104,6 +113,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     userDeleteCartCandy: (userId, candyId) => {
       dispatch(userDeleteCartCandyThunk(userId, candyId))
+    },
+    guestUpdateCartCandyQty: (candyId, quantity) => {
+      dispatch(guestUpdateCartCandyQty(candyId, quantity))
+    },
+    guestDeleteCartCandy: (candyId) => {
+      dispatch(guestDeleteCartCandy(candyId))
     },
   }
 }
