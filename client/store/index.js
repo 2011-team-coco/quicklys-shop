@@ -6,12 +6,16 @@ import user from './user'
 import candiesReducer from '../redux/candies'
 import singleCandyReducer from '../redux/singleCandy'
 import cartReducer from './cart'
+import usersReducer from '../redux/users'
+import singleUserReducer from '../redux/singleUser'
 
 const reducer = combineReducers({
   user,
   candies: candiesReducer,
   singleCandy: singleCandyReducer,
   cart: cartReducer,
+  users: usersReducer,
+  singleUser: singleUserReducer,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
