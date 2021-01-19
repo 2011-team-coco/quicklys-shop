@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
         console.log('user ID: undefined')
       }
     } else {
-      res.json({notAllowed: 'Unauthorized Guest'})
+      res.json('Unauthorized Guest')
       console.log('user ID: undefined')
     }
   } catch (error) {
