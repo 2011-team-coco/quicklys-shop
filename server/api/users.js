@@ -13,42 +13,17 @@ router.get('/', async (req, res, next) => {
         })
         res.json(users)
       } else {
-        res.sendStatus(200)
-        console.log('Unauthorized User')
+        res.json({notAllowed: 'Unauthorized'})
+        console.log('user ID: undefined')
       }
     } else {
-      res.sendStatus(200)
-      console.log('Unauthorized Guest')
+      res.json({notAllowed: 'Unauthorized'})
+      console.log('user ID: undefined')
     }
   } catch (error) {
     next(error)
   }
 })
-
-//   try {
-//     const users = await User.findAll({
-//       // explicitly select only the id and email fields - even though
-//       // users' passwords are encrypted, it won't help if we just
-//       // send everything to anyone who asks!
-//       attributes: ['id', 'email', 'isAdmin'],
-//     })
-//     res.json(users)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
-
-// try {
-//   if (req.session.passport) {
-//     const singleUser = await User.findByPk(req.params.id)
-//     res.json(singleUser)
-//   } else {
-//     res.json({notAllowed: 'Unauthorized'})
-//     console.log('user ID: undefined')
-//   }
-// } catch (error) {
-//   next(error)
-// }
 
 router.get('/:id', async (req, res, next) => {
   try {

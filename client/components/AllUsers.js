@@ -6,7 +6,7 @@ import AddUserForm from './AddUserForm'
 
 const defaultState = {
   email: '',
-  isAdmin: false,
+  password: '',
 }
 
 export class AllUsers extends React.Component {
@@ -41,7 +41,8 @@ export class AllUsers extends React.Component {
   }
 
   render() {
-    const isThereUsers = this.props.users.length
+    const isThereUsers = this.props.users
+    console.log(this.props.users)
 
     return (
       <div>
@@ -54,7 +55,7 @@ export class AllUsers extends React.Component {
           changeHandler={this.changeHandler}
           userValues={this.state}
         />
-        {isThereUsers && (
+        {Array.isArray(isThereUsers) && (
           <div className="flex">
             {this.props.users.map((user) => (
               <ul key={user.id}>
@@ -63,9 +64,13 @@ export class AllUsers extends React.Component {
                   <Link to={`/users/${user.id}`}>
                     <h4>Email: {user.email}</h4>
                     <h4>ID: {user.id}</h4>
-                    <h4>IsAdmin: {user.isAdmin.toString()}</h4>
+                    <h4>Is Admin: {user.isAdmin.toString()}</h4>
                   </Link>
-                  <button userid={user.id} onClick={this.deleteHandler}>
+                  <button
+                    type="button"
+                    userid={user.id}
+                    onClick={this.deleteHandler}
+                  >
                     Delete
                   </button>
                 </main>
@@ -76,7 +81,7 @@ export class AllUsers extends React.Component {
 
         <div>
           {isThereUsers === undefined && (
-            <p> Sorry ... Unauthorized User - MUST BE ADMIN </p>
+            <p> Sorry ... There is no users to display </p>
           )}
         </div>
       </div>
