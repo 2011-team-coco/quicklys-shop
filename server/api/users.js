@@ -13,11 +13,11 @@ router.get('/', async (req, res, next) => {
         })
         res.json(users)
       } else {
-        res.json({notAllowed: 'Unauthorized User'})
+        res.json(['Unauthorized User'])
         console.log('user ID: undefined')
       }
     } else {
-      res.json('Unauthorized Guest')
+      res.json(['Unauthorized Guest'])
       console.log('user ID: undefined')
     }
   } catch (error) {
