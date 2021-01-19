@@ -13,9 +13,11 @@ router.get('/', async (req, res, next) => {
         })
         res.json(users)
       } else {
+        res.sendStatus(404)
         console.log('Unauthorized User')
       }
     } else {
+      res.sendStatus(404)
       console.log('Unauthorized Guest')
     }
   } catch (error) {
