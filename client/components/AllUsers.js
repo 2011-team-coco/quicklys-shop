@@ -6,7 +6,7 @@ import AddUserForm from './AddUserForm'
 
 const defaultState = {
   email: '',
-  password: '',
+  isAdmin: false,
 }
 
 export class AllUsers extends React.Component {
@@ -42,6 +42,7 @@ export class AllUsers extends React.Component {
 
   render() {
     const isThereUsers = this.props.users.length
+
     return (
       <div>
         <div>
@@ -61,7 +62,8 @@ export class AllUsers extends React.Component {
                   <h4>User Information</h4>
                   <Link to={`/users/${user.id}`}>
                     <h4>Email: {user.email}</h4>
-                    <h4>Password: {user.password}</h4>
+                    <h4>ID: {user.id}</h4>
+                    <h4>IsAdmin: {user.isAdmin.toString()}</h4>
                   </Link>
                   <button userid={user.id} onClick={this.deleteHandler}>
                     Delete
@@ -74,7 +76,7 @@ export class AllUsers extends React.Component {
 
         <div>
           {isThereUsers === undefined && (
-            <p> Sorry ... There is no users to display </p>
+            <p> Sorry ... Unauthorized User - MUST BE ADMIN </p>
           )}
         </div>
       </div>

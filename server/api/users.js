@@ -6,17 +6,49 @@ router.use('/:userId/cart', require('./carts.js'))
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ['id', 'email'],
-    })
-    res.json(users)
-  } catch (err) {
-    next(err)
+    if (req.session.passport) {
+      if (req.session.passport.user === 1) {
+        const users = await User.findAll({
+          attributes: ['id', 'email', 'isAdmin'],
+        })
+        res.json(users)
+      } else {
+        res.json({notAllowed: 'Unauthorized User'})
+        console.log('user ID: undefined')
+      }
+    } else {
+      res.json({notAllowed: 'Unauthorized Guest'})
+      console.log('user ID: undefined')
+    }
+  } catch (error) {
+    next(error)
   }
 })
+
+//   try {
+//     const users = await User.findAll({
+//       // explicitly select only the id and email fields - even though
+//       // users' passwords are encrypted, it won't help if we just
+//       // send everything to anyone who asks!
+//       attributes: ['id', 'email', 'isAdmin'],
+//     })
+//     res.json(users)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
+// try {
+//   if (req.session.passport) {
+//     const singleUser = await User.findByPk(req.params.id)
+//     res.json(singleUser)
+//   } else {
+//     res.json({notAllowed: 'Unauthorized'})
+//     console.log('user ID: undefined')
+//   }
+// } catch (error) {
+//   next(error)
+// }
 
 router.get('/:id', async (req, res, next) => {
   try {

@@ -60,6 +60,19 @@ const createApp = () => {
       saveUninitialized: false,
     })
   )
+
+  app.use((req, res, next) => {
+    console.log('Session:', req.session)
+    console.log('Session ID:', req.session.id)
+    if (req.session.passport) {
+      console.log('user ID:', req.session.passport.user)
+    } else {
+      console.log('user ID: undefined')
+    }
+
+    next()
+  })
+
   app.use(passport.initialize())
   app.use(passport.session())
 
