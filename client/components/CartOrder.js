@@ -32,14 +32,13 @@ const CartOrder = (props) => {
     e.preventDefault()
     console.log('Checkout Triggered')
     console.log('cart props ', props)
-    //call order api
+    //if logged in, call order api
     let order
     if (props.isLoggedIn) {
       const {data} = await axios.post(`/api/orders/${props.cart.cartId}`)
       order = data
     } else {
-      //if guest,
-      //before clearing cart, save everything in cart as "order"
+      //if guest, save everything in cart as "order"
       order = {
         ...props.cart,
         order_candies: [...props.cart.order_candies],

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axios from 'axios'
 
 //all
@@ -157,6 +158,7 @@ const initialState = {
   order_candies: [],
 }
 
+// eslint-disable-next-line complexity
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case CLEAR_CART:

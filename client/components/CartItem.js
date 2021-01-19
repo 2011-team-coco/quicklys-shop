@@ -17,6 +17,7 @@ const quantityOptions = () => {
   return arr
 }
 
+//if candy is cicked, redirects to single candy view
 const onItemClick = (e) => {
   history.push(`/candies/${e.currentTarget.value}`)
 }
