@@ -1,15 +1,8 @@
+/* eslint-disable no-useless-constructor */
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
-import {getCartThunk} from '../store/cart'
-import {
-  Grid,
-  Paper,
-  makeStyles,
-  CardHeader,
-  Typography,
-  Divider,
-} from '@material-ui/core'
+import {Grid, Paper, CardHeader, Typography, Divider} from '@material-ui/core'
 
 import CartItem from './CartItem'
 import CartOrder from './CartOrder'

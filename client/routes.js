@@ -15,7 +15,9 @@ import SingleUser from './components/SingleUser'
  */
 class Routes extends Component {
   async componentDidMount() {
+    console.log('TRIGGERING COMPONENT DID MOUNT IN ROUTES')
     await this.props.loadInitialData()
+    console.log('LOADED USER: ', this.props.isLoggedIn)
     if (this.props.isLoggedIn) {
       this.props.loadCart(this.props.userId)
     }

@@ -14,7 +14,6 @@ const OrderCandy = db.define('order_candy', {
       notEmpty: true,
     },
   },
-  // include historical price
 })
 
 module.exports = OrderCandy
