@@ -36,10 +36,11 @@ export class AllCandies extends React.Component {
     this.setState(defaultState)
   }
 
-  deleteHandler(event) {
+  async deleteHandler(event) {
     event.preventDefault()
     const candyId = Number(event.target.getAttribute('candyid'))
-    this.props.deleteCandy(candyId)
+    await this.props.deleteCandy(candyId)
+    await this.props.loadCandies()
   }
 
   render() {
