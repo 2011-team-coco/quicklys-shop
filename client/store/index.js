@@ -27,6 +27,7 @@ const persistedState = localStorage.getItem('reduxState')
 
 const store = createStore(reducer, persistedState, middleware)
 
+//subscribing to redux updates
 store.subscribe(() => {
   localStorage.setItem('reduxState', JSON.stringify(store.getState()))
 })

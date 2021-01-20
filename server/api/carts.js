@@ -2,10 +2,17 @@ const router = require('express').Router({mergeParams: true})
 const {User, Order, OrderCandy, Candy} = require('../db/models')
 module.exports = router
 
+const authorizeUser = (req, res, next) => {
+  if (req.user && req.user.id.toString() === req.params.userId) {
+    next()
+  } else {
+    res.sendStatus(401)
+  }
+}
+
 // /users/:userId/cart/
-router.get('/', async (req, res, next) => {
+router.get('/', authorizeUser, async (req, res, next) => {
   try {
-    // TODO: validate that req.params.userId matches session's userId OR user is admin
     const cart = await getOrCreateCart(req.params.userId)
     res.json(cart)
   } catch (err) {
@@ -14,10 +21,8 @@ router.get('/', async (req, res, next) => {
 })
 
 // /users/:userId/cart/candy/:candyId
-router.post('/candy/:candyId', async (req, res, next) => {
+router.post('/candy/:candyId', authorizeUser, async (req, res, next) => {
   try {
-    // TODO: validate that req.params.userId matches session's userId OR user is admin
-
     // get current cart for orderId
     let cart = await Order.findOne({
       where: {
@@ -49,10 +54,8 @@ router.post('/candy/:candyId', async (req, res, next) => {
 })
 
 // /users/:userId/cart/candy/:candyId
-router.put('/candy/:candyId', async (req, res, next) => {
+router.put('/candy/:candyId', authorizeUser, async (req, res, next) => {
   try {
-    // TODO: validate that req.params.userId matches session's userId OR user is admin
-
     // get active cart
     const cart = await Order.findOne({
       where: {
@@ -62,7 +65,7 @@ router.put('/candy/:candyId', async (req, res, next) => {
     })
     if (!cart) throw new Error('Validation error')
 
-    // look up order_candy in order to update quantity
+    // look up entry in through table - order_candy to update quantity
     const orderCandyToUpdate = await OrderCandy.findOne({
       where: {
         orderId: cart.id,
@@ -87,10 +90,8 @@ router.put('/candy/:candyId', async (req, res, next) => {
   }
 })
 
-router.delete('/candy/:candyId', async (req, res, next) => {
+router.delete('/candy/:candyId', authorizeUser, async (req, res, next) => {
   try {
-    // TODO: validate that req.params.userId matches session's userId OR user is admin
-
     // get active cart
     const cart = await Order.findOne({
       where: {
@@ -100,7 +101,7 @@ router.delete('/candy/:candyId', async (req, res, next) => {
     })
     if (!cart) throw new Error('Validation error')
 
-    // look up order_candy in order to update quantity
+    // look up order_candy to update quantity
     const orderCandyToDelete = await OrderCandy.findOne({
       where: {
         orderId: cart.id,
@@ -159,6 +160,7 @@ const getOrCreateCart = async (userId) => {
       userId: userId,
       isCart: true,
     })
+    //get cart to eager load with includeQuery
     cart = await Order.findByPk(newCart.id, {
       attributes: [['id', 'cartId'], 'userId'],
       include: includeQuery,
