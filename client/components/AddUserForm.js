@@ -18,6 +18,15 @@ const AddUserForm = (props) => {
         value={props.userValues.password}
         onChange={props.changeHandler}
       />
+      <label>Administrator Status:</label>
+      <select
+        name="isAdmin"
+        onChange={props.changeHandler}
+        value={props.userValues.isAdmin}
+      >
+        <option value="True">True</option>
+        <option value="False">False</option>
+      </select>
       <button type="submit" disabled={props.userValues.password === ''}>
         Submit
       </button>
