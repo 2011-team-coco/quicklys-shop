@@ -8,8 +8,7 @@ const candies = [
   {
     name: 'Twix',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_YIOBSmRZWL52k4Smn2uUNLRkINMhPx1bYg&usqp=CAU',
+    imageUrl: 'twix.jpg',
     description:
       'Crunchy cookie, smooth caramel, and delicious milk chocolate!',
     quantity: 25,
@@ -17,16 +16,14 @@ const candies = [
   {
     name: 'KitKat',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4txRO7Pxt82YhOEY0vKPKq-atrnBpxhPTLx8Qmah1TiS15yiXenqO-HNVWmz72Lesq8a-37Y&usqp=CAc',
+    imageUrl: 'kitkat.jpg',
     description: 'Smooth milk chocolate and light, crispy wafers!',
     quantity: 25,
   },
   {
     name: 'Snickers',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStRfqjJ1djcr6sT6JRR5E8eN56SeOvRKdWig&usqp=CAU',
+    imageUrl: 'snickers.jpg',
     description:
       'Crammed with peanuts, caramel and nougat then coated with milk chocolate!',
     quantity: 25,
@@ -34,72 +31,63 @@ const candies = [
   {
     name: 'Milky Way',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuAwZZ9XGTLy8xJVYfYQ2yaRuZp3k9kYa931p58ncgRujtV0VjOSfubAuK9jtqzDtrpbO6SG25&usqp=CAc',
+    imageUrl: 'milkyway.jpg',
     description: 'Creamy nougat and caramel covered with milk chocolate!',
     quantity: 25,
   },
   {
     name: 'Butterfinger',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO3XHDgREr4cHSoCpEAfvEUYJ6LtLvSQytgw&usqp=CAU',
+    imageUrl: 'butterfinger.jpg',
     description: 'Crispety, crunchety, peanut-buttery!',
     quantity: 25,
   },
   {
     name: 'Nestle Crunch Bar',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIaA6yinQE0vUXsqhnhknblIhIdMMCygDweYnugjrbVujrsvuQgkc_7fFC3RU&usqp=CAc',
+    imageUrl: 'crunchbar.jpg',
     description: 'Crispy, crunchy, milk chocolate!',
     quantity: 25,
   },
   {
     name: "Hershey's Milk Chocolate Bar",
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvDBCIRtfA6L1bDDv-j7aP1WSTF9wOx59Xf4XJ81v50vBPNe2-6cuwo6TjZ9bgu4ur31tPUDg&usqp=CAc',
+    imageUrl: 'hersheybar.jpg',
     description: 'Rich and creamy milk chocolate!',
     quantity: 25,
   },
   {
     name: 'Almond Joy',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR0mUFTOs8Ja1M2lk4iNxRqjARpAeHcbW1GtJsoFqOsuWXTeLO1PpAqNwLogyABWXVcgtzy3A&usqp=CAc',
+    imageUrl: 'almondjoy.jpg',
     description: 'Whole almonds and sweet coconut covered in milk chocolate!',
     quantity: 25,
   },
   {
     name: 'Toblerone',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqbXSGovpioFM44FjlLL03BZkSIcwifqOkNQ&usqp=CAU',
+    imageUrl: 'toblerone.png',
     description: 'Swiss chocolate with honey and almond nougat!',
     quantity: 25,
   },
   {
     name: "Resse's Peanut Butter Cups",
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7ocC4EFbfgFRfaGaveV0-jb5vCHp_GCIAcQ&usqp=CAU',
+    imageUrl: 'reeses.jpg',
     description: 'Rich milk chocolate and creamy peanut butter!',
     quantity: 25,
   },
   {
     name: '100 Grand Bar',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhk7brhfGMbr-H_dYRwf8rKPaJ_tnsiyD47A&usqp=CAU',
+    imageUrl: '100grand.jpg',
     description: 'Rich milk chocolate, creamy caramel, and crispy rice!',
     quantity: 25,
   },
   {
     name: 'Heath Bar',
     price: 1,
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIPdPFTIU6aTnzOp4qPJRYD8TZsZ0fBuwqQQ&usqp=CAU',
+    imageUrl: 'heath.jpg',
     description:
       'English toffee covered in a thick layer of smooth milk chocolate!',
     quantity: 25,
@@ -128,7 +116,8 @@ async function seed() {
         price: (Math.random() * (5 - 0.25) + 0.25).toFixed(2),
         quantity: Math.floor(Math.random() * (1000 - 1) + 1),
         description: 'A tasty treat',
-        imageUrl: 'candyDefault.png',
+        ////possible bug
+        imageUrl: 'candyDefault.jpg',
       }
       return Candy.create(candy)
     })

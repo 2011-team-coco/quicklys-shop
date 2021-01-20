@@ -17,6 +17,7 @@ export class SingleCandy extends React.Component {
   onAddCandyClick(e) {
     e.preventDefault()
     const candy = this.props.singleCandy
+
     if (this.props.isLoggedIn) {
       // TO DO: remove hard-coded quantity
       this.props.userAddCandy(this.props.userId, candy.id, 1)
@@ -33,15 +34,17 @@ export class SingleCandy extends React.Component {
   }
   render() {
     const singleCandy = this.props.singleCandy
+    console.log(singleCandy)
     return (
       <div>
         <h1>{singleCandy.name}!</h1>
-        <img src={singleCandy.imageUrl} width="250" />
+        <img src={`../${singleCandy.imageUrl}`} width="250" />
         <div>Price: {singleCandy.price}</div>
         <div>
           <EditCandy {...this.props} />
         </div>
         <button
+          type="button"
           disabled={this.props.candiesInCart.includes(
             this.props.singleCandy.id
           )}

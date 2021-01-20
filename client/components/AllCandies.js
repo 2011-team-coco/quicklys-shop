@@ -61,7 +61,7 @@ export class AllCandies extends React.Component {
             {this.props.candies.map((candy) => (
               <ul key={candy.id}>
                 <main>
-                  <h4>Candies Name & Quatity</h4>
+                  <h4>Candies Name & Quantity</h4>
                   <Link to={`/candies/${candy.id}`}>
                     <h4>{candy.name}</h4>
                     <h4>{candy.quantity}</h4>
@@ -78,7 +78,7 @@ export class AllCandies extends React.Component {
 
         <div>
           {isThereCandies === undefined && (
-            <p> Sorry ... There is no candies to display </p>
+            <p> Sorry ... There are no candies to display </p>
           )}
         </div>
       </div>
