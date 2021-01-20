@@ -29,10 +29,13 @@ router.post('/:cartId', async (req, res, next) => {
 
     // TODO: validate that order.userId matches the session's userId OR user is admin
     // if not, throw an error
-
-    // update the order's cart flag
-    await order.update({isCart: false})
-    res.json(order)
+    if (req.user && req.user.id === order.userId) {
+      // update the order's cart flag
+      await order.update({isCart: false})
+      res.json(order)
+    } else {
+      res.sendStatus(401)
+    }
   } catch (err) {
     next(err)
   }

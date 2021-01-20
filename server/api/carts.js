@@ -2,8 +2,16 @@ const router = require('express').Router({mergeParams: true})
 const {User, Order, OrderCandy, Candy} = require('../db/models')
 module.exports = router
 
+const authorizeUser = (req, res, next) => {
+  if (req.user && req.user.id.toString() === req.params.userId) {
+    next()
+  } else {
+    res.sendStatus(401)
+  }
+}
+
 // /users/:userId/cart/
-router.get('/', async (req, res, next) => {
+router.get('/', authorizeUser, async (req, res, next) => {
   try {
     // TODO: validate that req.params.userId matches session's userId OR user is admin
     const cart = await getOrCreateCart(req.params.userId)
@@ -14,7 +22,7 @@ router.get('/', async (req, res, next) => {
 })
 
 // /users/:userId/cart/candy/:candyId
-router.post('/candy/:candyId', async (req, res, next) => {
+router.post('/candy/:candyId', authorizeUser, async (req, res, next) => {
   try {
     // TODO: validate that req.params.userId matches session's userId OR user is admin
 
@@ -49,7 +57,7 @@ router.post('/candy/:candyId', async (req, res, next) => {
 })
 
 // /users/:userId/cart/candy/:candyId
-router.put('/candy/:candyId', async (req, res, next) => {
+router.put('/candy/:candyId', authorizeUser, async (req, res, next) => {
   try {
     // TODO: validate that req.params.userId matches session's userId OR user is admin
 
@@ -87,7 +95,7 @@ router.put('/candy/:candyId', async (req, res, next) => {
   }
 })
 
-router.delete('/candy/:candyId', async (req, res, next) => {
+router.delete('/candy/:candyId', authorizeUser, async (req, res, next) => {
   try {
     // TODO: validate that req.params.userId matches session's userId OR user is admin
 

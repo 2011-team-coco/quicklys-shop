@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {getCartThunk} from '../store/cart'
 import {
   Grid,
   Paper,
