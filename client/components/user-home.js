@@ -12,7 +12,9 @@ export class UserHome extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchCart(this.props.userId)
+    if (this.props.isLoggedIn) {
+      this.props.fetchCart(this.props.userId)
+    }
   }
 
   render() {
@@ -33,6 +35,7 @@ const mapState = (state) => {
   return {
     email: state.user.email,
     userId: state.user.id,
+    isLoggedIn: !!state.user.id,
   }
 }
 

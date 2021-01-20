@@ -1,3 +1,4 @@
+/* eslint-disable no-lonely-if */
 import React from 'react'
 import {connect} from 'react-redux'
 import {Grid, Typography, Button, TextField, MenuItem} from '@material-ui/core'
@@ -23,6 +24,7 @@ const onItemClick = (e) => {
 }
 
 const CartItem = (props) => {
+  //event handler
   const onQuantityChange = (e) => {
     const candyId = props.orderCandy.candy.candyId
     //if user is logged in
@@ -106,7 +108,8 @@ const CartItem = (props) => {
     </Grid>
   )
 }
-
+//connecting all my thunks to my component
+//don't need to mapState because userId & candyId passed down as props
 const mapDispatchToProps = (dispatch) => {
   return {
     userUpdateCartCandyQty: (userId, candyId, quantity) => {

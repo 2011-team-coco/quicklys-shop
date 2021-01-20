@@ -26,9 +26,7 @@ router.post('/:cartId', async (req, res, next) => {
       ],
     })
     if (!order) throw new Error('Validation error')
-
-    // TODO: validate that order.userId matches the session's userId OR user is admin
-    // if not, throw an error
+    // if no order, throw error
     if (req.user && req.user.id === order.userId) {
       // update the order's cart flag
       await order.update({isCart: false})

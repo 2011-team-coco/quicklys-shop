@@ -44,7 +44,7 @@ const CartOrder = (props) => {
         order_candies: [...props.cart.order_candies],
       }
     }
-    //dispatch clearCart
+    //dispatch clearCart to clear cart in redux state
     props.clearCart()
     //redirect to confirmation page, make order info available on props.location.state.order
     history.push('/confirmation', order)
