@@ -7,6 +7,7 @@ import AddUserForm from './AddUserForm'
 const defaultState = {
   email: '',
   password: '',
+  isAdmin: false,
 }
 
 export class AllUsers extends React.Component {
