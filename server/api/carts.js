@@ -124,7 +124,7 @@ router.delete('/candy/:candyId', authorizeUser, async (req, res, next) => {
   }
 })
 
-const getOrCreateCart = async (userId) => {
+async function getOrCreateCart(userId) {
   const includeQuery = [
     {
       model: OrderCandy,
