@@ -27,8 +27,18 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const singleUser = await User.findByPk(req.params.id)
-    res.json(singleUser)
+    if (req.session.passport) {
+      if (req.session.passport.user === 1) {
+        const singleUser = await User.findByPk(req.params.id)
+        res.json(singleUser)
+      } else {
+        res.json({notAllowed: 'Unauthorized'})
+        console.log('user ID: undefined')
+      }
+    } else {
+      res.json({notAllowed: 'Unauthorized'})
+      console.log('user ID: undefined')
+    }
   } catch (error) {
     next(error)
   }

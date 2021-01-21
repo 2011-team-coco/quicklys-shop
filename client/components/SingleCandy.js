@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {modifyCandy, fetchSingleCandy} from '../redux/singleCandy'
 import {guestAddCartCandyThunk, userAddCartCandyThunk} from '../store/cart'
 import EditCandy from './EditCandy'
+import {fetchUsers} from '../redux/users'
 
 export class SingleCandy extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ export class SingleCandy extends React.Component {
 
   async componentDidMount() {
     await this.props.loadSingleCandy(this.props.match.params.id)
+    this.props.loadUsers()
   }
 
   onAddCandyClick(e) {
@@ -34,15 +36,15 @@ export class SingleCandy extends React.Component {
   }
   render() {
     const singleCandy = this.props.singleCandy
+    const isThereUsers = this.props.users
+
     console.log(singleCandy)
     return (
       <div>
         <h1>{singleCandy.name}!</h1>
         <img src={`../${singleCandy.imageUrl}`} width="250" />
         <div>Price: {singleCandy.price}</div>
-        <div>
-          <EditCandy {...this.props} />
-        </div>
+
         <button
           type="button"
           disabled={this.props.candiesInCart.includes(
@@ -52,6 +54,13 @@ export class SingleCandy extends React.Component {
         >
           Add to cart
         </button>
+        {Array.isArray(isThereUsers) && (
+          <div className="flex">
+            <div>
+              <EditCandy {...this.props} />
+            </div>
+          </div>
+        )}
       </div>
     )
   }
@@ -59,6 +68,7 @@ export class SingleCandy extends React.Component {
 
 const mapState = (state) => ({
   singleCandy: state.singleCandy,
+  users: state.users,
   isLoggedIn: !!state.user.id,
   userId: state.user.id,
   candiesInCart: state.cart.order_candies.map((orderCandy) => {
@@ -68,6 +78,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   loadSingleCandy: (id) => dispatch(fetchSingleCandy(id)),
+  loadUsers: () => dispatch(fetchUsers()),
+
   updateCandy: (previousCandyId, modifiedCandy) =>
     dispatch(modifyCandy(previousCandyId, modifiedCandy)),
   guestAddCandy: (quantity, candyId, candyName, candyPrice, imageUrl) =>
