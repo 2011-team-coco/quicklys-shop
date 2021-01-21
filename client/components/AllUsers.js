@@ -50,14 +50,15 @@ export class AllUsers extends React.Component {
         <div>
           <h1>All Users View</h1>
         </div>
-        <AddUserForm
-          formTitle="Create User"
-          submitHandler={this.submitHandler}
-          changeHandler={this.changeHandler}
-          userValues={this.state}
-        />
+
         {Array.isArray(isThereUsers) && (
           <div className="flex">
+            <AddUserForm
+              formTitle="Create User"
+              submitHandler={this.submitHandler}
+              changeHandler={this.changeHandler}
+              userValues={this.state}
+            />
             {this.props.users.map((user) => (
               <ul key={user.id}>
                 <main>
@@ -81,8 +82,8 @@ export class AllUsers extends React.Component {
         )}
 
         <div>
-          {isThereUsers === undefined && (
-            <p> Sorry ... There is no users to display </p>
+          {isThereUsers.notAllowed && (
+            <p> NOT ALLOWED - UNAUTHORIZED ACCESS! </p>
           )}
         </div>
       </div>
